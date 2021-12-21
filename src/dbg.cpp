@@ -3,6 +3,7 @@
 #include <sys/ptrace.h>
 #include <unistd.h>
 #include "debugger.hpp"
+#include "linenoise.h"
 
 using namespace dbg;
 
