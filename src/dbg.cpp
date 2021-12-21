@@ -7,13 +7,6 @@
 
 using namespace dbg;
 
-bool is_prefix(const std::string& s, const std::string& prefix) {
-    if (s.size() < prefix.size()) {
-        return false;
-    }
-    return std::equal(s.begin(), s.end(), prefix.begin());
-}
-
 void handle_command(const std::string& line) {
 
 }
