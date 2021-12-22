@@ -1,13 +1,12 @@
 #ifndef DBG_HPP
 #define DBG_HPP
 
-#include "breakpoint.hpp"
 #include <linux/types.h>
+#include <breakpoint.hpp>
 #include <string>
 #include <unordered_map>
 #include <utility>
 
-namespace dbg {
 class Debugger {
 public:
   Debugger(std::string prog_name, pid_t pid)
@@ -22,6 +21,5 @@ private:
   pid_t m_pid;
   std::unordered_map<std::intptr_t, Breakpoint> m_breakpoints;
 };
-} // namespace dbg
 
 #endif

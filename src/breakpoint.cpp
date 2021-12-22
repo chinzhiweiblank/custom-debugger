@@ -2,8 +2,6 @@
 #include "sys/ptrace.h"
 #include <cstdint>
 
-using namespace dbg;
-
 void Breakpoint::enable() {
   auto data = ptrace(PTRACE_PEEKDATA, m_pid, m_addr, nullptr);
   m_saved_data = static_cast<uint8_t>(data & 0xff);
