@@ -1,4 +1,5 @@
 #include "debugger.hpp"
+#include "breakpoint.hpp"
 #include "linenoise.h"
 #include "utils.hpp"
 #include <iostream>
@@ -13,6 +14,9 @@ void Debugger::handle_command(const std::string &line) {
   auto command = args[0];
   if (is_prefix(command, "continue")) {
     continue_execution();
+  } else if (is_prefix(command, "break")) {
+    std::string addr{args[1], 2};
+    set_breakpoint_at_addr(std::stol(addr, 0, 16));
   } else {
     std::cerr << "Unknown command " << command;
   }
@@ -54,4 +58,10 @@ int main(int argc, char *argv[]) {
     Debugger dbg{prog, pid};
     dbg.run();
   }
+}
+
+void Debugger::set_breakpoint_at_addr(std::intptr_t addr) {
+  Breakpoint bp{m_pid, addr};
+  bp.enable();
+  m_breakpoints[addr] = bp;
 }
