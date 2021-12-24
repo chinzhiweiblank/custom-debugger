@@ -1,14 +1,15 @@
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(BUILD_DIR "${PROJECT_SOURCE_DIR}/build")
 cmake_minimum_required (VERSION 3.0)
 project (Dbg)
 
 add_compile_options(-std=c++14)
 
 include_directories(dep/libelfin deps/linenoise include)
-add_executable(customdbg src/debugger.cpp deps/linenoise/linenoise.c)
+add_executable(${BUILD_DIR}/customdbg src/debugger.cpp src/breakpoint.cpp deps/linenoise/linenoise.c)
 
 # Examples
-add_executable(test examples/test.cpp)
+add_executable(${BUILD_DIR}/test examples/test.cpp)
 set_target_properties(test
                       PROPERTIES COMPILE_FLAGS "-g -O0")
 
