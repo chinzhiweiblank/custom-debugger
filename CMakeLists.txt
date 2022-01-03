@@ -1,27 +1,26 @@
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(BUILD_DIR "${PROJECT_SOURCE_DIR}/build")
 cmake_minimum_required (VERSION 3.0)
-project (Dbg)
+project (dbg)
 
 add_compile_options(-std=c++14)
 
-include_directories(dep/libelfin deps/linenoise include)
-add_executable(${BUILD_DIR}/customdbg src/debugger.cpp src/breakpoint.cpp deps/linenoise/linenoise.c)
+include_directories(deps/libelfin deps/linenoise include)
+add_executable(dbg src/debugger.cpp src/breakpoint.cpp deps/linenoise/linenoise.c)
 
-# Examples
-add_executable(${BUILD_DIR}/test examples/test.cpp)
+add_executable(test examples/test.cpp)
 set_target_properties(test
                       PROPERTIES COMPILE_FLAGS "-g -O0")
 
-# Adding and making link libraries
-set(PROJECT_DEPS "${PROJECT_SOURCE_DIR}/deps")
+add_executable(example examples/example.cpp)
+set_target_properties(example
+                      PROPERTIES COMPILE_FLAGS "-gdwarf-2 -O0")
+
 add_custom_target(
    libelfin
    COMMAND make
-   WORKING_DIRECTORY ${PROJECT_DEPS}/libelfin
+   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/deps/libelfin
 )
 
-target_link_libraries(customdbg
-                      ${PROJECT_DEPS}/libelfin/dwarf/libdwarf++.so
-                      ${PROJECT_DEPS}/libelfin/elf/libelf++.so)
-add_dependencies(customdbg libelfin)
+target_link_libraries(dbg
+                      ${PROJECT_SOURCE_DIR}/deps/libelfin/dwarf/libdwarf++.so
+                      ${PROJECT_SOURCE_DIR}/deps/libelfin/elf/libelf++.so)
+add_dependencies(dbg libelfin)

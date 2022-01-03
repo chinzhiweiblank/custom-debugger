@@ -12,6 +12,12 @@ bool is_prefix(const std::string &s, const std::string &prefix) {
   return std::equal(s.begin(), s.end(), prefix.begin());
 }
 
+bool is_suffix(const std::string &s, const std::string &suffix) {
+  if (s.size() < suffix.size()) {
+    return false;
+  }
+  return std::equal(s.end()-suffix.size(), s.end(), suffix.begin());
+}
 std::vector<std::string> split_string(const std::string &s,
                                       const char delimiter) {
   std::vector<std::string> result;
